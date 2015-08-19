@@ -28,6 +28,16 @@
             </field>
         </record>
         
+        <record id="view_manage_worklogs_filter" model="ir.ui.view">
+            <field name="name">hr.analytic.timesheet.filter</field>
+            <field name="model">hr.analytic.timesheet</field>
+            <field name="arch" type="xml">
+                <search string="Search Worklog">
+                    <filter string="My Worklogs" name="my_worklogs" domain="[('user_id', '=', uid)]" help="My Worklogs"/>
+                </search>
+            </field>
+        </record>
+        
         <!-- It misses the onchange management-->
         <!--
         <record id="view_manage_worklogs_form" model="ir.ui.view">
@@ -57,6 +67,8 @@
             <field name="res_model">hr.analytic.timesheet</field>
             <field name="view_type">form</field>
             <field name="view_mode">calendar,form,tree</field>
+            <field name="context">{'search_default_my_worklogs':1}</field>
+            <field name="search_view_id" ref="view_manage_worklogs_filter"/>
         </record>
 
         <!--
