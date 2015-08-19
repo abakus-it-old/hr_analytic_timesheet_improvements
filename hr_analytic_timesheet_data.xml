@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">   
+        <function model="hr.analytic.timesheet" name="_set_date_begin_if_date_exits"/>
+    </data>
+</openerp>
