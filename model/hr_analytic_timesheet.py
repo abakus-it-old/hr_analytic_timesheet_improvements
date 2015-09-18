@@ -32,6 +32,12 @@ class hr_analytic_timesheet_improvements(models.Model):
         return datetime.strftime(self.check_and_correct_date_in_fifteen_step(datetime.now()), '%Y-%m-%d %H:%M:%S')
     
     date_begin = fields.Datetime(string='Start Date', default=_get_default_date)
+
+    # set the date of date_begin to "date" to avoid consistency problems
+    @api.onchange('date_begin')
+    def copy_dates(self):
+        self.write({'date' : self.date_begin})
+        self.date = self.date_begin
     
     def create(self, cr, uid, vals, *args, **kwargs):
         hr_analytic_timesheet_id = super(hr_analytic_timesheet_improvements,self).create(cr, uid, vals, *args, **kwargs)
