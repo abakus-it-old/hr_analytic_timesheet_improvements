@@ -21,7 +21,8 @@
             <field name="arch" type="xml">
                 <calendar string="Manage Worklogs" color="user_id"
                           date_start="date_begin" date_delay="unit_amount"
-                          quick_add="False" avatar_model="hr.analytic.timesheet">
+                          quick_add="False" avatar_model="hr.analytic.timesheet"
+                          mode="week">
                     <field name="user_id"/>
                     <field name="name"/>
                 </calendar>
