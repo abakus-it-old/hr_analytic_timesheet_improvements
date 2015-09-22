@@ -1,4 +1,8 @@
-﻿from openerp import models, fields, api
+from openerp import models, fields, api
+from datetime import datetime, date, timedelta
+import logging
+import math
+_logger = logging.getLogger(__name__)
 
 class project_task_work_improvements(models.Model):
     _inherit = ['project.task.work']
