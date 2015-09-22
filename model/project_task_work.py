@@ -3,6 +3,20 @@
 class project_task_work_improvements(models.Model):
     _inherit = ['project.task.work']
 
+    @api.onchange('hours')
+    def set_date_as_end(self):
+        if (self.id == False):
+            date_to_change = datetime.strptime(self.date, '%Y-%m-%d %H:%M:%S')
+            minutes = math.ceil(self.hours * 60)
+
+            nb_hours = math.trunc(minutes / 60)
+            nb_minutes = math.ceil(minutes % 60)
+            delta = timedelta(hours = nb_hours, minutes = nb_minutes)
+
+            date_to_change = date_to_change - delta
+            self.write({'date' : date_to_change})
+            self.date = date_to_change.strftime('%Y-%m-%d %H:%M:%S')
+
     def create(self, cr, uid, vals, *args, **kwargs):
         project_task_work_id = super(project_task_work_improvements,self).create(cr, uid, vals, *args, **kwargs)
         project_task_work = self.browse(cr, uid, project_task_work_id)
