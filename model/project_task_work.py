@@ -9,7 +9,7 @@ class project_task_work_improvements(models.Model):
 
     @api.onchange('hours')
     def set_date_as_end(self):
-        if (self.id == False):
+        if (not self.id):
             date_to_change = datetime.strptime(self.date, '%Y-%m-%d %H:%M:%S')
             minutes = math.ceil(self.hours * 60)
 
