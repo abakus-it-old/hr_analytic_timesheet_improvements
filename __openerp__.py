@@ -1,7 +1,7 @@
 {
     'name': "Worklog management improvements",
     'version': '1.0',
-    'depends': ['hr_timesheet','project_timesheet','contract_timesheet_activities_on_site_management'],
+    'depends': ['hr_timesheet','project_timesheet'],
     'author': "Bernard DELHEZ, AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'Humain Resources',
