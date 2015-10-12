@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>      
-        <record id="view_hr_timesheet_sheet_new_date" model="ir.ui.view">
-            <field name="name">hr_timesheet_sheet_new_date</field>
-            <field name="model">hr_timesheet_sheet.sheet</field>
+		<record id="view_hr_timesheet_sheet_new_date" model="ir.ui.view">
+            		<field name="name">hr_timesheet_sheet_new_date</field>
+            		<field name="model">hr_timesheet_sheet.sheet</field>
 			<field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//tree[@string='Timesheet Activities']/field[@name='date']" position="attributes">
-                    <attribute name='invisible'>1</attribute> 
-                </xpath>
-                <xpath expr="//tree[@string='Timesheet Activities']/field[@name='date']" position="after">
-                    <field name="date_begin"/>
-                </xpath>
-            </field>
-        </record>
-    </data>
+            		<field name="arch" type="xml">
+                		<xpath expr="//tree[@string='Timesheet Activities']/field[@name='date']" position="attributes">
+	                    		<attribute name='invisible'>1</attribute> 
+                		</xpath>
+                		<xpath expr="//tree[@string='Timesheet Activities']/field[@name='date']" position="after">
+	                    		<field name="date_begin"/>
+                		</xpath>
+            		</field>
+        	</record>
+
+		<record id="view_hr_timesheet_line_new_date" model="ir.ui.view">
+            		<field name="name">hr_timesheet_line_new_date</field>
+            		<field name="model">hr.analytic.timesheet</field>
+			<field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            		<field name="arch" type="xml">
+            			<xpath expr="/field[@name='date']" position="attributes">
+	                    		<attribute name='invisible'>1</attribute> 
+                		</xpath>
+            			<field name="date" position="after">
+                    			<field name="date_begin"/>
+                		</field>
+            		</field>
+        	</record>
+    	</data>
 </openerp>
