@@ -4,7 +4,12 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 class hr_analytic_timesheet_improvements(models.Model):
-    _inherit = ['hr.analytic.timesheet']
+    _inherit = ['account.analytic.line']
+
+    def _get_default_date(self):
+        return datetime.strftime(self.check_and_correct_date_in_fifteen_step(datetime.now()), '%Y-%m-%d %H:%M:%S')
+
+    date_begin = fields.Datetime(string='Start Date', default=_get_default_date)
     
     def check_and_correct_date_in_fifteen_step(self, date):
         newdate = date
@@ -27,11 +32,6 @@ class hr_analytic_timesheet_improvements(models.Model):
         
         newdate = newdate.replace(minute=newminute, second=0)
         return newdate
-    
-    def _get_default_date(self):
-        return datetime.strftime(self.check_and_correct_date_in_fifteen_step(datetime.now()), '%Y-%m-%d %H:%M:%S')
-    
-    date_begin = fields.Datetime(string='Start Date', default=_get_default_date)
 
     # set the date of date_begin to "date" to avoid consistency problems
     @api.onchange('date_begin')
@@ -42,6 +42,7 @@ class hr_analytic_timesheet_improvements(models.Model):
     def create(self, cr, uid, vals, *args, **kwargs):
         hr_analytic_timesheet_id = super(hr_analytic_timesheet_improvements,self).create(cr, uid, vals, *args, **kwargs)
         hr_analytic_timesheet = self.browse(cr, uid, hr_analytic_timesheet_id)
+        hr_analytic_timesheet.is_timesheet = True
         if hr_analytic_timesheet.date_begin:
             start_date = datetime.strptime(hr_analytic_timesheet.date_begin, '%Y-%m-%d %H:%M:%S')
             newdate = self.check_and_correct_date_in_fifteen_step(start_date)
@@ -52,7 +53,7 @@ class hr_analytic_timesheet_improvements(models.Model):
         return hr_analytic_timesheet_id
 
     def write(self, cr, uid, ids, vals, context=None):
-        result = super(hr_analytic_timesheet_improvements,self).write(cr, uid, ids, vals, context)
+        result = super(hr_analytic_timesheet_improvements, self).write(cr, uid, ids, vals, context)
         for timesheet in self.browse(cr, uid, ids, context=context):
             if timesheet.date_begin:
                 start_date = datetime.strptime(timesheet.date_begin, '%Y-%m-%d %H:%M:%S')
@@ -64,14 +65,14 @@ class hr_analytic_timesheet_improvements(models.Model):
         return result
     
     def _set_date_begin_if_date_exits(self, cr, uid, ids=None, context=None):
-        hr_analytic_timesheet_obj = self.pool.get('hr.analytic.timesheet')
+        hr_analytic_timesheet_obj = self.pool.get('account.analytic.line')
         hr_analytic_timesheets = hr_analytic_timesheet_obj.search(cr, uid, [('date', 'like', '-')])
         if hr_analytic_timesheets:
             for hr_analytic_timesheet in hr_analytic_timesheet_obj.browse(cr, uid, hr_analytic_timesheets):
                 if hr_analytic_timesheet.date:
                     begin_date = datetime.strftime(datetime.strptime(hr_analytic_timesheet.date, '%Y-%m-%d').replace(hour=0,minute=0, second=0), '%Y-%m-%d %H:%M:%S')
                     query = """
-                            UPDATE hr_analytic_timesheet
+                            UPDATE account_analytic_line
                             SET date_begin=%s
                             WHERE id=%s
                             """
