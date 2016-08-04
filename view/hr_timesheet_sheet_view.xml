@@ -29,7 +29,7 @@
 
 		<record id="view_hr_timesheet_line_task_and_issue_link" model="ir.ui.view">
 			<field name="name">view_hr_timesheet_line_task_and_issue_link</field>
-			<fielfd name="model">account.analytic.line</field>
+			<field name="model">account.analytic.line</field>
 			<field name="inherit_id" ref="analytic.view_account_analytic_line_form" />
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='account_id']" position="after">
