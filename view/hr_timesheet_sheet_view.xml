@@ -9,6 +9,10 @@
 				<xpath expr="//field[@name='date']" position="replace">
 					<field name="date_begin"/>
 				</xpath>
+				<xpath expr="//field[@name='account_id']" position="replace">
+					<field name="issue_id"/>
+					<field name="task_id"/>
+				</xpath>
 			</field>
 		</record>
 
