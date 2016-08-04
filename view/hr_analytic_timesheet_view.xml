@@ -9,6 +9,10 @@
                 <field name="date" position="replace">
                     <field name="date_begin"/>
                 </field>
+                <field name="account_id" position="after">
+                    <field name="task_id" />
+                    <field name="issue_id" />
+                </field>
             </field>
         </record>
 
