@@ -16,6 +16,17 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="analytic_line_view_form_new_date">
+            <field name="name">analytic_line_view_form_new_date</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="replace">
+                    <field name="date_begin"/>
+                </field>
+            </field>
+        </record>
+
         <record id="view_manage_worklogs_calendar" model="ir.ui.view">
             <field name="name">Manage Worklogs</field>
             <field name="model">account.analytic.line</field>
