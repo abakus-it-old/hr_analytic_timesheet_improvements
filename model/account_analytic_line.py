@@ -1,6 +1,8 @@
-﻿from openerp import models, fields, api
+from openerp import models, fields, api
 from datetime import datetime, timedelta
 from openerp.tools.translate import _
+import logging
+_logger = logging.getLogger(__name__)
 
 class hr_analytic_timesheet_improvements(models.Model):
     _inherit = 'account.analytic.line'
@@ -33,6 +35,7 @@ class hr_analytic_timesheet_improvements(models.Model):
         return newdate
 
     # set the date of date_begin to "date" to avoid consistency problems
+    @api.multi
     @api.onchange('date_begin')
     def copy_dates(self):
         self.date = self.date_begin
